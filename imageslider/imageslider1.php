@@ -3,6 +3,7 @@
 session_start();
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <title>Connecting Schools A Modern Platform for Modern Schools</title>
@@ -88,7 +89,15 @@ function carousel() {
   <a href="#">My Profile</a>
   <a href="#">Settings</a>
   <a href="../login/login.php">Logout</a>
+  <a href="../addevents/addevents.php">Create Event</a>
 </div>
+<?php
+        if($_SESSION["uname"]==" ")
+        {
+            header("Location:../login/login.php");
+        }
+
+?>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; <?php echo "Hello " . $_SESSION["uname"] ?></span>
 

@@ -27,6 +27,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 ?>
 <?php 
+	$_SESSION["uname"] = " " ; 
+	$_SESSION["pass"] = " " ; 
 	$student_error = "";
 	$school_error = "";
 	$login_error="";
@@ -108,9 +110,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					header("Location:../imageslider/imageslider1.php");
 				}
 			else{
-				$login_error = "Invalid Credentials.";
+					$login_error = "Invalid Credentials.";
 				}
-	}
+			}
 	}
 ?>
 <body>
@@ -211,7 +213,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clear"> </div>
 		</div>
 		<div class="agileits_copyright">
-			<p>© © 2016 Connecting Schools. All rights reserved </p>
+			<p>© 2016 Connecting Schools. All rights reserved </p>
 		</div>
 	</div>
 <?php

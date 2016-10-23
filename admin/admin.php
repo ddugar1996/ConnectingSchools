@@ -1,5 +1,5 @@
 <?php
-session_start();
+  session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +34,13 @@ session_start();
     <![endif]-->
 
 </head>
+<?php
+        if($_SESSION["uname"] == " ")
+        {
+            header("Location:../login/login.php");
+        }
 
+?>
 <body>
 
     <div id="wrapper">
@@ -115,14 +121,9 @@ session_start();
                         <a href="admin.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="applications.html"><i class="fa fa-fw fa-dashboard"></i>Applications</a>
+                        <a href="applications.php"><i class="fa fa-fw fa-dashboard"></i>Applications</a>
                     </li>
-                    <li>
-                        <a href="staff.html"><i class="fa fa-fw fa-dashboard"></i>Staff</a>
-                    </li>
-                    <li>
-                        <a href="events.html"><i class="fa fa-fw fa-dashboard"></i>Events</a>
-                    </li> 	  
+                    	  
                         </ul>
                     </li>
                 </ul>

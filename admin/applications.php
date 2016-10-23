@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +36,22 @@
 
 </head>
 
+<?php
+   $m = new MongoClient();
+   $db = $m->connectingschools;
+   //echo "Database mydb selected";
+   $event = $db->createCollection("Event");
+   $cursor = $event->find();
+?>
+<?php
+    if($_SESSION["uname"]==" ")
+    {
+      header("Location:../login/login.php");
+    }
+
+?>
+
+
 <body>
 
     <div id="wrapper">
@@ -46,7 +66,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SuperVisor</a>
+                <a class="navbar-brand" href="admin.php">SuperVisor</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -87,7 +107,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>Deepak Jain <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php echo "". $_SESSION["uname"] ;?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -100,7 +120,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../login/login.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -112,15 +132,9 @@
                         <a href="admin.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li class="active">
-                        <a href="applications.html"><i class="fa fa-fw fa-dashboard"></i>Applications</a>
+                        <a href="applications.php"><i class="fa fa-fw fa-dashboard"></i>Applications</a>
                     </li>
-                    <li>
-                        <a href="staff.html"><i class="fa fa-fw fa-dashboard"></i>Staff</a>
-                    </li>
-                    
-                        <li>
-                        <a href="events.html"><i class="fa fa-fw fa-dashboard"></i>Events</a>
-                    </li> 	  
+                   	  
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -143,6 +157,13 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                <?php
+
+    foreach($cursor as $document)
+    {
+
+          if($document["Status"]=="0") {
+                ?>
 
                 <div class="row">
                    <div class="media">
@@ -150,17 +171,23 @@
     				<img src="avatar.jpeg" class="media-object" style="width:60px">
   			</div>
 	  		<div class="media-body">
-    				<h4 class="media-heading">Steve Smith</h4>
-				<p class="small text-muted"><i class="fa fa-clock-o"></i>4:32 PM,6-08-2016</p>
+    				<h4 class="media-heading"><?php echo $document["Title"] ;  ?></h4>
+				
      				<p> 
-				<br>School Name- Delhi Public School,Sector 7,Varun Path,Mansarovar,Jaipur</br>
-				<br>Event-Workshop on Ethical Hacking</br>
-				<br>Age Group-14-18 years</br>
-				<br>Date-28-10-2016</br>
-				<br>Registration fee-INR 500</br>
-				<br>Upper Limit on Participants-250</br>
-				<br>Additional Info- Ethical hacking refers to the act of locating weaknesses and vulnerabilities of computer 					    and information systems by duplicating the intent and actions of malicious hackers. 
-				</br>
+				<br>School Name- <?php echo $document["Schoolname"];  ?></br>
+				<br>Date(mm/dd/yyy)-<?php echo $document["Startdate"]; ?></br>
+				<br>Genre - <?php echo $document["Type"]; ?> </br>
+        <br>Start Time - <?php echo $document["Starttime"]; ?></br>
+        <br>End Time - <?php echo $document["Endtime"]; ?></br>
+        <br>Venue-<?php echo $document["Venue"]; ?></br>
+        <br>Details - <?php echo $document["Details"]; ?></br>
+        <br>Expected Strength - <?php echo $document["Expectedstrength"]; ?></br>
+        <br>Budget - INR <?php echo $document["Budget"]; ?> /-</br>
+        <br>Fee Per Head - INR <?php echo $document["Fee"]; ?> /-</br>
+        <br>Email - <?php echo $document["Email"]; ?></br>
+        <br>Event Link- <a href=<?php echo $document["Link"]; ?>> Event </a> </br>
+        <br>Submitted By- <?php echo $document["Submittedby"]; ?></br>
+
 				</p>
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
 				 <span class="glyphicon glyphicon-ok">Approve</span></button>
@@ -211,7 +238,9 @@
 				<hr> 	
   			</div>
             	  </div>
-	       </div>			
+	       </div>	
+          <?php } }?>
+         	<!--	
 		<div class="row">
                    <div class="media">
   			<div class="media-left media-top">
@@ -232,10 +261,10 @@
 				</p>
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
 				 <span class="glyphicon glyphicon-ok">Approve</span></button>
-				<!-- Modal -->
+				
 				<div id="myModal" class="modal fade" role="dialog">
   				<div class="modal-dialog">
-    				<!-- Modal content-->
+    				
     				<div class="modal-content">
      					<div class="modal-header">
      			   			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -255,10 +284,10 @@
 				</div>
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mmyModal">
 				<span class="glyphicon glyphicon-remove">Decline</span></button>
-				<!-- Modal -->
+			
 				<div id="mmyModal" class="modal fade" role="dialog">
   				<div class="modal-dialog">
-    				<!-- Modal content-->
+    				
     				<div class="modal-content">
      					<div class="modal-header">
      			   			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -301,10 +330,10 @@
 				</p>
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
 				 <span class="glyphicon glyphicon-ok">Approve</span></button>
-				<!-- Modal -->
+				
 				<div id="myModal" class="modal fade" role="dialog">
   				<div class="modal-dialog">
-    				<!-- Modal content-->
+    				
     				<div class="modal-content">
      					<div class="modal-header">
      			   			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -324,10 +353,10 @@
 				</div>
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mmyModal">
 				<span class="glyphicon glyphicon-remove">Decline</span></button>
-				<!-- Modal -->
+				
 				<div id="mmyModal" class="modal fade" role="dialog">
   				<div class="modal-dialog">
-    				<!-- Modal content-->
+    				
     				<div class="modal-content">
      					<div class="modal-header">
      			   			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -353,9 +382,9 @@
                     <a href="admin.php">Back</a>
                 </li>		               
         </div>
-        <!-- /#page-wrapper -->
+        
 
-    </div>
+    </div> -->
     <!-- /#wrapper -->
 
     <!-- jQuery -->
