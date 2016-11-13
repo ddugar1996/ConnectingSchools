@@ -97,7 +97,7 @@ session_start();
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo "Hello " . $_SESSION["uname"] ?><b class="caret"></b></a>
                       <ul class="dropdown-menu">
                           <li>
-                              <a href="../addevents/addevents.php">Create Event</a>
+                              <a href="../post user login/post user login.php">Create Event</a>
                           </li>
                           <li>
                               <a href="../login/login.php">Logout</a>
